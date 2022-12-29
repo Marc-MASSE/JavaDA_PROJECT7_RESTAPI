@@ -6,16 +6,21 @@ import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "bidlist")
 public class BidList {
-    // TODO: Map columns in data table BIDLIST with corresponding java fields
 	
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
