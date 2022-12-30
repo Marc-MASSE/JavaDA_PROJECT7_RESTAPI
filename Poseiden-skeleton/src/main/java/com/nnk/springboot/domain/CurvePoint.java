@@ -13,22 +13,23 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "curvepoint")
 public class CurvePoint {
-    // TODO: Map columns in data table CURVEPOINT with corresponding java fields
 	
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "Id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
     
-    @Column(name = "CurveId")
+    @Column(name = "curve_id")
     private Integer curveId;
     
+    @Column(name = "as_of_date")
     private Timestamp asOfDate;
     
-    private double term;
+    private Double term;
     
-    private double value;
+    private Double value;
     
+    @Column(name = "creation_date")
     private Timestamp creationDate;
 
 	public CurvePoint(Integer curveId, double term, double value) {

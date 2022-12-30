@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nnk.springboot.DTO.BidListDTO;
@@ -15,7 +18,10 @@ import com.nnk.springboot.service.IBidListService;
 
 import javassist.NotFoundException;
 
+@Service
 public class BidListServiceImpl implements IBidListService {
+	
+	static Logger log = LogManager.getLogger(BidListServiceImpl.class.getName());
 	
 	private BidListRepository bidListRepository;
 	
@@ -37,26 +43,23 @@ public class BidListServiceImpl implements IBidListService {
 	@Override
 	public List<BidListDTO> getBidLists() {
 		List<BidList> bidListList = bidListRepository.findAllByOrderByBidListIdDesc();
+		log.info("BidList list = {}",bidListList);
 		return bidListList.stream()
-				.map(b -> bidListToDTOConverter(b))
+				.map(b -> bidListToDTOMapper(b))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public BidListDTO getBidListById(Integer id) throws NotFoundException {
-		// TODO Verify NotFoundException method
+	public BidListDTO getBidListById(Integer id) {
 		if (bidListRepository.existsById(id)) {
-			return bidListToDTOConverter(bidListRepository.getById(id));
+			return bidListToDTOMapper(bidListRepository.getById(id));
 		}
-		throw new NotFoundException("There is no BidList with id = "+id);
-		//return new BidListDTO();
+		return new BidListDTO();
 
 	}
 
 	@Override
-	@Transactional
-	public BidList updateBidList(Integer id, BidListDTO bidListDTO) throws NotFoundException {
-		// TODO Verify NotFoundException method
+	public BidList updateBidList(Integer id, BidListDTO bidListDTO) {
 		if (bidListRepository.existsById(id)) {
 			BidList bidList = bidListRepository.getById(id);
 			bidList.setAccount(bidListDTO.getAccount());
@@ -64,20 +67,18 @@ public class BidListServiceImpl implements IBidListService {
 			bidList.setBidQuantity(bidListDTO.getBidQuantity());
 			return bidListRepository.save(bidList);
 		}
-		throw new NotFoundException("There is no BidList with id = "+id);
+		return new BidList();
 	}
 
 	@Override
-	@Transactional
-	public void deleteBidList(Integer id) throws NotFoundException {
+	public void deleteBidList(Integer id) {
 		// TODO Verify NotFoundException method
 		if (bidListRepository.existsById(id)) {
 			bidListRepository.deleteById(id);
 		}
-		throw new NotFoundException("There is no BidList with id = "+id);
 	}
 	
-	public BidListDTO bidListToDTOConverter(BidList bidList) {
+	public BidListDTO bidListToDTOMapper(BidList bidList) {
 		return BidListDTO.builder()
 				.bidListId(bidList.getBidListId())
 				.account(bidList.getAccount())

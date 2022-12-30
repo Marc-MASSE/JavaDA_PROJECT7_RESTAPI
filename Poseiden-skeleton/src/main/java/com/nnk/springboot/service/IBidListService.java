@@ -13,11 +13,11 @@ public interface IBidListService {
 
     List<BidListDTO> getBidLists();
 
-    BidListDTO getBidListById(Integer id) throws NotFoundException;
+    BidListDTO getBidListById(Integer id);
 
-    BidList updateBidList(Integer id, BidListDTO bidListDTO) throws NotFoundException;
+    BidList updateBidList(Integer id, BidListDTO bidListDTO);
 
-    void deleteBidList(Integer id) throws NotFoundException;
+    void deleteBidList(Integer id);
 
 
 }

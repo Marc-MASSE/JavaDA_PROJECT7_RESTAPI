@@ -3,7 +3,7 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
-<title>Home</title>
+<title>BidList/add</title>
 <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
@@ -15,9 +15,26 @@
 
 	<div class="row">
 		<form action="#" th:action="@{/bidList/validate}" th:object="${bidList}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to input the values of Bid, there are 2 buttons: Save data and Cancel to the list Bid
-			 -->
+			 <div class="form-group">
+			 	<label class="control-label">Account</label>
+			 	<input type="text" th:field="*{account}" class ="form-control" placeholder="Account"/>
+			 	<span></span>
+			 </div>
+			 <div class="form-group">
+			 	<label class="control-label">Type</label>
+			 	<input type="text" th:field="*{type}" class ="form-control" placeholder="Type"/>
+			 	<span></span>
+			 </div>
+ 			 <div class="form-group">
+			 	<label class="control-label">Bid quantity</label>
+			 	<input type="number" th:field="*{bidQuantity}" class ="form-control" placeholder="Bid quantity"/>
+			 	<span></span>
+			 </div>
+ 			 <div class="form-group">
+			 	<a class="btn btn-danger" href="/bidList/list" role="button">Cancel</a>
+			 	<button type="submit" class="btn btn-primary">Add BidList</button>
+			 </div>
+			 
 		</form>
 	</div>
 
