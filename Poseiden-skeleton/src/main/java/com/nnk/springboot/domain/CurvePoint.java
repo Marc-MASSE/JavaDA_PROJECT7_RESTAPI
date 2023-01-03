@@ -2,7 +2,12 @@ package com.nnk.springboot.domain;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.nnk.springboot.DTO.CurvePointDTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +15,9 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "curvepoint")
 public class CurvePoint {

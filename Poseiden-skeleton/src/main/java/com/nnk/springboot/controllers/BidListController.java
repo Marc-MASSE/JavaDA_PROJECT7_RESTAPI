@@ -46,8 +46,12 @@ public class BidListController {
     }
 
     @PostMapping("/bidList/validate")
-    public String validate(@Valid @ModelAttribute BidListDTO bidListDTO, BindingResult result, Model model) {
+    public String validate(@Valid @ModelAttribute("bidList") BidListDTO bidListDTO, BindingResult result, Model model) {
         log.info("POST request - endpoint /bidList/validate - add Bidlist = {}",bidListDTO);
+        if (result.hasErrors()) {
+            log.info("POST request - endpoint /bidList/validate - BindingResult = {}",result);
+			return "bidList/add";
+		}
     	bidListService.addBidList(bidListDTO);
         model.addAttribute("bidList", bidListDTO);
         log.info("POST request - endpoint /bidList/validate - create bidList = {}",bidListDTO);
@@ -63,8 +67,12 @@ public class BidListController {
     }
 
     @PostMapping("/bidList/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid @ModelAttribute BidListDTO bidListDTO, BindingResult result, Model model) {
+    public String updateBid(@PathVariable("id") Integer id, @Valid @ModelAttribute("bidList") BidListDTO bidListDTO, BindingResult result, Model model) {
         // TODO: check required fields, if valid call service to update Bid and return list Bid
+        if (result.hasErrors()) {
+            log.info("POST request - endpoint /bidList/update - BindingResult = {}",result);
+			return "bidList/update";
+		}
     	bidListService.updateBidList(id,bidListDTO);
         log.info("POST request - endpoint /bidList/update - update bidList = {}",bidListDTO);
         return "redirect:/bidList/list";

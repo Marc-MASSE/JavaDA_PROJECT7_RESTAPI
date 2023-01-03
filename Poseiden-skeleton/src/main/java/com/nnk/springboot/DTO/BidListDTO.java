@@ -1,7 +1,5 @@
 package com.nnk.springboot.DTO;
 
-import java.sql.Timestamp;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -19,11 +17,11 @@ public class BidListDTO {
     private Integer bidListId;
 
     @NotBlank(message = "Account is mandatory")
-    @Size(max = 30, message = "30 characters maximum allowed")
+    @Size(max = 30, message = "30 characters maximum are allowed")
     private String account;
 
     @NotBlank(message = "Type is mandatory")
-    @Size(max = 30, message = "30 characters maximum allowed")
+    @Size(max = 30, message = "30 characters maximum are allowed")
     private String type;
 
     private Double bidQuantity;

@@ -7,6 +7,10 @@ VALUES
 ('101','type1','1'),('102','type2','2'),('103','type3','3');
 
 
+INSERT INTO curvepoint (curve_id,term,value)
+VALUES
+('1','10','11'),('2','20','22'),('3','30','33');
+
 
 INSERT INTO Users (fullname,username,password,role)
 VALUES

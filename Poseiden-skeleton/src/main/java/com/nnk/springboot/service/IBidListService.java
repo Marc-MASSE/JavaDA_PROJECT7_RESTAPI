@@ -19,5 +19,4 @@ public interface IBidListService {
 
     void deleteBidList(Integer id);
 
-
 }
