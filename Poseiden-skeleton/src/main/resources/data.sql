@@ -11,6 +11,9 @@ INSERT INTO curvepoint (curve_id,term,value)
 VALUES
 ('1','10','11'),('2','20','22'),('3','30','33');
 
+INSERT INTO rating (id,moodys_rating,sand_p_rating,fitch_rating,order_number)
+VALUES
+('1','A1','Aa1','Aa1',1),('2','A2','Aa2','Aa2',2),('3','A3','Aa3','Aa3',3);
 
 INSERT INTO Users (fullname,username,password,role)
 VALUES

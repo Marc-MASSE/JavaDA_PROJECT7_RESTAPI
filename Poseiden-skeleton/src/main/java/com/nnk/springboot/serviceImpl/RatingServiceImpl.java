@@ -63,7 +63,6 @@ public class RatingServiceImpl implements IRatingService {
 
 	@Override
 	public void deleteRating(Integer id) {
-		// TODO Auto-generated method stub
 		if (ratingRepository.existsById(id)) {
 			ratingRepository.deleteById(id);
 		}

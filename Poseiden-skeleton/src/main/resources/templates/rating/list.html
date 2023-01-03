@@ -3,7 +3,7 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
-<title>Home</title>
+<title>Rating/List</title>
 <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
@@ -17,13 +17,16 @@
 			<a href="/ruleName/list">Rule</a>
 		</div>
 		<div class="col-6 text-right">
-			Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
+			Logged in user: 
+			<b th:inline="text"  class="user">[[${#httpServletRequest.remoteUser}]]</b>
 			<form th:action="@{/app-logout}" method="POST">
 				<input type="submit" value="Logout"/>
 			</form>
 		</div>
 	</div>
-	<div class="row"><h2>Rating List</h2></div>
+	<div class="row">
+		<h2>Rating List</h2>
+	</div>
 	<div class="row">
 		<a href="/rating/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
@@ -38,7 +41,17 @@
 				</tr>
 			</thead>
 			<tbody>
-			<!-- TODO: Show all Rating to the table, the Action column will have Edit & Delete buttons -->
+				<tr th:each="rt:${rating}">
+					<td style="width: 10%" th:text="${rt.id}"></td>
+					<td th:text="${rt.moodysRating}"></td>
+					<td th:text="${rt.sandPRating}"></td>
+					<td th:text="${rt.fitchRating}"></td>
+					<td style="width: 25%" th:text="${rt.orderNumber}"></td>
+					<td style="width: 15%" class="text-center">
+						<a th:href="@{/rating/update/{id}(id=${rt.id})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/rating/delete/{id}(id=${rt.id})}">Delete</a>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
