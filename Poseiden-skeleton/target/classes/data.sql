@@ -6,6 +6,9 @@ INSERT INTO bidlist (account,type,bid_quantity)
 VALUES
 ('101','type1','1'),('102','type2','2'),('103','type3','3');
 
+INSERT INTO trade (trade_id,account,type,buy_quantity)
+VALUES
+('1','111','type1','100'),('2','222','type2','200'),('3','333','type3','300');
 
 INSERT INTO curvepoint (curve_id,term,value)
 VALUES

@@ -32,7 +32,6 @@ public class RuleNameController {
 
     @RequestMapping("/ruleName/list")
     public String home(Model model) {
-        // TODO: find all RuleName, add to model
     	List<RuleNameDTO> ruleNameList = ruleNameService.getRuleNames();
     	model.addAttribute("ruleName",ruleNameList);
         log.info("GET request - endpoint /ruleName/list - return RuleName/list page");

@@ -3,7 +3,7 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
-<title>Home</title>
+<title>Trade/list</title>
 <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
@@ -23,7 +23,9 @@
 			</form>
 		</div>
 	</div>
-	<div class="row"><h2>Trade List</h2></div>
+	<div class="row">
+		<h2>Trade List</h2>
+	</div>
 	<div class="row">
 		<a href="/trade/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
@@ -37,7 +39,17 @@
 				</tr>
 			</thead>
 			<tbody>
-			<!-- TODO: Show all Trade to the table, the Action column will have Edit & Delete buttons -->
+				<tr th:each="tr:${trade}">
+					<td style="width: 10%" th:text="${tr.tradeId}"></td>
+					<td th:text="${tr.account}"></td>
+					<td th:text="${tr.type}"></td>
+					<td th:text="${tr.buyQuantity}"></td>
+					<td style="width: 15%" class="text-center">
+						<a th:href="@{/trade/update/{id}(id=${tr.tradeId})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/trade/delete/{id}(id=${tr.tradeId})}">Delete</a>
+					</td>
+				</tr>
+			
 			</tbody>
 		</table>
 	</div>
