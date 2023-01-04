@@ -1,11 +1,19 @@
 package com.nnk.springboot.domain;
 
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
