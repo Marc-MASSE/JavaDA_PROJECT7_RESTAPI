@@ -15,6 +15,12 @@ INSERT INTO rating (id,moodys_rating,sand_p_rating,fitch_rating,order_number)
 VALUES
 ('1','A1','Aa1','Aa1',1),('2','A2','Aa2','Aa2',2),('3','A3','Aa3','Aa3',3);
 
+INSERT INTO rulename (id,name,description,json,template,sql_str,sql_part)
+VALUES
+('1','Nom1','des1','json1','temp1','str1','part1'),
+('2','Nom2','des2','json2','temp2','str2','part2'),
+('3','Nom3','des3','json3','temp3','str3','part3');
+
 INSERT INTO Users (fullname,username,password,role)
 VALUES
 ('Administrator','admin','$2a$12$yaPVzh/YEegzYbLNG/2csOhBOzxYJ6Gz7CRuQdsxwETJ3QKdijVDS','ADMIN'),

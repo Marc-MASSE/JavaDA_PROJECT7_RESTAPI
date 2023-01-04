@@ -46,7 +46,6 @@ public class RatingController {
 
     @PostMapping("/rating/validate")
     public String validate(@Valid @ModelAttribute("rating") RatingDTO ratingDTO, BindingResult result, Model model) {
-        log.info("POST request - endpoint /rating/validate - add Rating = {}",ratingDTO);
         if (result.hasErrors()) {
             log.info("POST request - endpoint /rating/validate - BindingResult = {}",result);
 			return "rating/add";
@@ -76,7 +75,7 @@ public class RatingController {
     }
 
     @GetMapping("/rating/delete/{id}")
-    public String deleteRating(@PathVariable("id") Integer id, Model model) {
+    public String deleteRating(@PathVariable("id") Integer id) {
        	ratingService.deleteRating(id);
         log.info("POST request - endpoint /rating/delete - delete rating with id = {}",id);
         return "redirect:/rating/list";

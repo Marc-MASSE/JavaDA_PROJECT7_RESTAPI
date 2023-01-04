@@ -45,7 +45,6 @@ public class CurveController {
 
     @PostMapping("/curvePoint/validate")
     public String validate(@Valid @ModelAttribute("curvePoint") CurvePointDTO curvePointDTO, BindingResult result, Model model) {
-        log.info("POST request - endpoint /curvePoint/validate - add CurvePoint = {}",curvePointDTO);
         if (result.hasErrors()) {
             log.info("POST request - endpoint /curvePoint/validate - BindingResult = {}",result);
 			return "curvePoint/add";
@@ -75,7 +74,7 @@ public class CurveController {
     }
 
     @GetMapping("/curvePoint/delete/{id}")
-    public String deleteBid(@PathVariable("id") Integer id, Model model) {
+    public String deleteBid(@PathVariable("id") Integer id) {
        	curvePointService.deleteCurvePoint(id);
         log.info("POST request - endpoint /curvePoint/delete - delete curvePoint with id = {}",id);
         return "redirect:/curvePoint/list";

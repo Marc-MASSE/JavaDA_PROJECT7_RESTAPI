@@ -47,7 +47,6 @@ public class BidListController {
 
     @PostMapping("/bidList/validate")
     public String validate(@Valid @ModelAttribute("bidList") BidListDTO bidListDTO, BindingResult result, Model model) {
-        log.info("POST request - endpoint /bidList/validate - add Bidlist = {}",bidListDTO);
         if (result.hasErrors()) {
             log.info("POST request - endpoint /bidList/validate - BindingResult = {}",result);
 			return "bidList/add";
@@ -60,7 +59,6 @@ public class BidListController {
 
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Bid by Id and to model then show to the form
         model.addAttribute("bidList", bidListService.getBidListById(id));
         log.info("GET request - endpoint /bidList/update - bidList to update = {}",bidListService.getBidListById(id));
         return "bidList/update";
@@ -68,7 +66,6 @@ public class BidListController {
 
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid @ModelAttribute("bidList") BidListDTO bidListDTO, BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Bid and return list Bid
         if (result.hasErrors()) {
             log.info("POST request - endpoint /bidList/update - BindingResult = {}",result);
 			return "bidList/update";
@@ -79,8 +76,7 @@ public class BidListController {
     }
 
     @GetMapping("/bidList/delete/{id}")
-    public String deleteBid(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Bid by Id and delete the bid, return to Bid list
+    public String deleteBid(@PathVariable("id") Integer id) {
     	bidListService.deleteBidList(id);
         log.info("POST request - endpoint /bidList/delete - delete bidList with id = {}",id);
         return "redirect:/bidList/list";
