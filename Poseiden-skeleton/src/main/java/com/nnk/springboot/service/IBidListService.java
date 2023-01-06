@@ -19,4 +19,6 @@ public interface IBidListService {
 
     void deleteBidList(Integer id);
 
+	BidListDTO bidListToDTOMapper(BidList bidList);
+
 }

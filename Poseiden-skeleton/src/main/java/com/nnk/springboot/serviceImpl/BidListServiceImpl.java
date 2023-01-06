@@ -72,12 +72,12 @@ public class BidListServiceImpl implements IBidListService {
 
 	@Override
 	public void deleteBidList(Integer id) {
-		// TODO Verify NotFoundException method
 		if (bidListRepository.existsById(id)) {
 			bidListRepository.deleteById(id);
 		}
 	}
 	
+	@Override
 	public BidListDTO bidListToDTOMapper(BidList bidList) {
 		return BidListDTO.builder()
 				.bidListId(bidList.getBidListId())

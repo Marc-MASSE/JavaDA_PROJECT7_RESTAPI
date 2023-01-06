@@ -68,6 +68,7 @@ public class RatingServiceImpl implements IRatingService {
 		}
 	}
 	
+	@Override
 	public RatingDTO ratingToDTOMapper(Rating rating) {
 		return RatingDTO.builder()
 				.id(rating.getId())

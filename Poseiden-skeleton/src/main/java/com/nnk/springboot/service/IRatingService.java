@@ -17,4 +17,6 @@ public interface IRatingService {
 
     void deleteRating(Integer id);
 
+	RatingDTO ratingToDTOMapper(Rating rating);
+
 }

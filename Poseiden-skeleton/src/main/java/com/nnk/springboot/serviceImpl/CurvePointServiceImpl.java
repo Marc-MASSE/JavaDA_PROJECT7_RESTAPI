@@ -71,6 +71,7 @@ public class CurvePointServiceImpl implements ICurvePointService {
 		}
 	}
 	
+	@Override
 	public CurvePointDTO curvePointToDTOMapper(CurvePoint curvePoint) {
 		return CurvePointDTO.builder()
 				.id(curvePoint.getId())

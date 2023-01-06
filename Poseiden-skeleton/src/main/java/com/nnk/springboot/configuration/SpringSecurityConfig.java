@@ -18,14 +18,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		http.csrf().disable()
-		.authorizeRequests()
-			.antMatchers("/css/**").permitAll()
-			.anyRequest().authenticated()
-		.and()
-		.formLogin()
-			//.loginPage("/login")
-			.defaultSuccessUrl("/",true) // true must be added for the redirect to work.
-			.permitAll();
+			.authorizeRequests()
+				.antMatchers("/css/**").permitAll()
+				.anyRequest().authenticated()
+			.and()
+			.formLogin()
+				//.loginPage("/login")
+				.defaultSuccessUrl("/",true) // true must be added for the redirect to work.
+				.permitAll();
 	}
 	
 	@Override

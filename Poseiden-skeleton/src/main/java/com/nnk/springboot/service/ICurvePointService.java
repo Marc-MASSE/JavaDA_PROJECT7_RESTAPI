@@ -17,4 +17,6 @@ public interface ICurvePointService {
 
     void deleteCurvePoint(Integer id);
 
+	CurvePointDTO curvePointToDTOMapper(CurvePoint curvePoint);
+
 }
