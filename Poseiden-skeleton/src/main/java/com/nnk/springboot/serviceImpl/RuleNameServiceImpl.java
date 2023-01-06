@@ -71,6 +71,7 @@ public class RuleNameServiceImpl implements IRuleNameService {
 		}
 	}
 	
+	@Override
 	public RuleNameDTO ruleNameToDTOMapper(RuleName ruleName) {
 		return RuleNameDTO.builder()
 				.id(ruleName.getId())

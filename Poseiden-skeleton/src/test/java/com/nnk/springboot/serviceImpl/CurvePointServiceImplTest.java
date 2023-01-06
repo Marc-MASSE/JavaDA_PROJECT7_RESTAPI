@@ -169,7 +169,7 @@ public class CurvePointServiceImplTest {
 	
 	// Test deleteCurvePoint
 	@Nested
-	class DeletCurvePointById {
+	class DeleteCurvePointById {
 		@Test
 		public void success() {
 			when(curvePointRepository.existsById(1))

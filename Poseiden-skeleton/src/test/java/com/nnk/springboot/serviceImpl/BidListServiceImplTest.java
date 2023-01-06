@@ -169,7 +169,7 @@ public class BidListServiceImplTest {
 	
 	// Test deleteBidList
 	@Nested
-	class DeletBidListById {
+	class DeleteBidListById {
 		@Test
 		public void success() {
 			when(bidListRepository.existsById(1))

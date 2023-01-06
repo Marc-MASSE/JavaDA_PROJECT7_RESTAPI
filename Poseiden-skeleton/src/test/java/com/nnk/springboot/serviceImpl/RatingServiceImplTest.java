@@ -178,7 +178,7 @@ public class RatingServiceImplTest {
 	
 	// Test deleteRating
 	@Nested
-	class DeletRatingById {
+	class DeleteRatingById {
 		@Test
 		public void success() {
 			when(ratingRepository.existsById(1))

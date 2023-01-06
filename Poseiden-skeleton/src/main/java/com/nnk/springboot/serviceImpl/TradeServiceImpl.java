@@ -68,6 +68,7 @@ public class TradeServiceImpl implements ITradeService {
 		}
 	}
 	
+	@Override
 	public TradeDTO tradeToDTOMapper(Trade trade) {
 		return TradeDTO.builder()
 				.tradeId(trade.getTradeId())

@@ -17,4 +17,6 @@ public interface ITradeService {
 
     void deleteTrade(Integer id);
 
+	TradeDTO tradeToDTOMapper(Trade trade);
+
 }

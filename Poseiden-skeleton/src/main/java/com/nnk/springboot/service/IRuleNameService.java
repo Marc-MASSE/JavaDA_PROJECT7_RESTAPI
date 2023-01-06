@@ -17,4 +17,6 @@ public interface IRuleNameService {
 
     void deleteRuleName(Integer id);
 
+	RuleNameDTO ruleNameToDTOMapper(RuleName ruleName);
+
 }

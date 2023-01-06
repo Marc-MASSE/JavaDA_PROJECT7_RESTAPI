@@ -16,13 +16,12 @@ import com.nnk.springboot.service.IUserService;
 public class UserServiceImpl implements IUserService {
 	
 	private UserRepository userRepository;
-	
-    @Autowired
     private PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	public UserServiceImpl(UserRepository userRepository) {
+	public UserServiceImpl(UserRepository userRepository,PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
@@ -72,6 +71,7 @@ public class UserServiceImpl implements IUserService {
 		}
 	}
 	
+	@Override
 	public UserDTO userToDTOMapper(User user) {
 		return UserDTO.builder()
 				.id(user.getId())
