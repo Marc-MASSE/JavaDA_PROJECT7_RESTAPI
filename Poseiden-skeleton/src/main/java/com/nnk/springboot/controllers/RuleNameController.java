@@ -3,11 +3,14 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.DTO.RuleNameDTO;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.RuleName;
+import com.nnk.springboot.domain.User;
+import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.service.IRuleNameService;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,21 +26,34 @@ import javax.validation.Valid;
 
 @Controller
 public class RuleNameController {
-    // TODO: Inject RuleName service
 	
 	static Logger log = LogManager.getLogger(RuleNameController.class.getName());
 	
 	@Autowired
 	private IRuleNameService ruleNameService;
+	
+	@Autowired
+	private UserRepository userRepository;
 
+	/*
+	 * Page "RuleName/list"
+	 * Display the entire list of ruleNames
+	 */
     @RequestMapping("/ruleName/list")
     public String home(Model model) {
     	List<RuleNameDTO> ruleNameList = ruleNameService.getRuleNames();
     	model.addAttribute("ruleName",ruleNameList);
         log.info("GET request - endpoint /ruleName/list - return RuleName/list page");
+		String connectedUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		User user = userRepository.findUserByUsername(connectedUser);
+		model.addAttribute("user",user);
         return "ruleName/list";
     }
 
+	/*
+	 * Page "RuleName/add"
+	 * Display a form to add a RuleNameDTO
+	 */
     @GetMapping("/ruleName/add")
     public String addRuleForm(Model model) {
     	RuleName ruleName = new RuleName();
@@ -46,6 +62,12 @@ public class RuleNameController {
         return "ruleName/add";
     }
 
+	/*
+	 * From "RuleName/add" page
+	 * To check if the data conforms to the specifications :
+	 * If this is not the case, redirect to RuleName/add page with error messages
+	 * If this is the case, add the ruleNameDTO and redirect to RuleName/list page 
+	 */
     @PostMapping("/ruleName/validate")
     public String validate(@Valid @ModelAttribute("ruleName") RuleNameDTO ruleNameDTO, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -58,6 +80,11 @@ public class RuleNameController {
         return "redirect:/ruleName/list";
     }
 
+	/*
+	 * Page "RuleName/update"
+	 * @param : id is the ruleName id to update
+	 * Display a form to update a this ruleName
+	 */
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
        	model.addAttribute("ruleName",ruleNameService.getRuleNameById(id));
@@ -65,6 +92,13 @@ public class RuleNameController {
         return "ruleName/update";
     }
 
+	/*
+	 * From "RuleName/update" page
+	 * @param : id is the ruleName id to update
+	 * To check if the data conforms to the specifications :
+	 * If this is not the case, redirect to RuleName/update page with error messages
+	 * If this is the case, update the ruleName and redirect to RuleName/list page 
+	 */
     @PostMapping("/ruleName/update/{id}")
     public String updateRuleName(@PathVariable("id") Integer id, @Valid @ModelAttribute("ruleName") RuleNameDTO ruleNameDTO, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -76,6 +110,10 @@ public class RuleNameController {
     	return "redirect:/ruleName/list";
     }
 
+	/*
+	 * From "RuleName/list" page
+	 * @param : id is the ruleName id to delete
+	 */
     @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id) {
       	ruleNameService.deleteRuleName(id);

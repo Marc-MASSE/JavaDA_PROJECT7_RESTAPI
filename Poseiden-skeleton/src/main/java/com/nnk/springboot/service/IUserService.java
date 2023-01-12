@@ -2,10 +2,13 @@ package com.nnk.springboot.service;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.nnk.springboot.DTO.UserDTO;
 import com.nnk.springboot.domain.User;
 
-public interface IUserService {
+// "extends UserDetailsService" to use DaoAuthenticationProvider in SpringSecurityConfig
+public interface IUserService extends UserDetailsService {
 	
     User addUser(UserDTO userDTO);
 

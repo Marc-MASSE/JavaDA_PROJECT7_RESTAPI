@@ -1,47 +1,68 @@
 package com.nnk.springboot.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.nnk.springboot.security.CustomOAuth2User;
+import com.nnk.springboot.security.CustomOAuth2UserService;
+import com.nnk.springboot.service.IUserService;
 
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	private IUserService userService;
+	
+	//@Autowired
+	//private CustomOAuth2UserService customOAuth2UserService;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		http.csrf().disable()
 			.authorizeRequests()
-				.antMatchers("/css/**").permitAll()
+				.antMatchers("/css/**","/","/home").permitAll()
+				.antMatchers("/oauth2/**").permitAll()
+				.antMatchers("/user/**").hasAuthority("ADMIN")
 				.anyRequest().authenticated()
 			.and()
 			.formLogin()
-				//.loginPage("/login")
-				.defaultSuccessUrl("/",true) // true must be added for the redirect to work.
-				.permitAll();
-	}
-	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-			.withUser("user").password(passwordEncoder().encode("user123"))
-			.roles("USER")
+				.loginPage("/login")
+				.defaultSuccessUrl("/login/redirection",true) // true must be added for the redirect to work.
+				.permitAll()
 			.and()
-			.withUser("admin").password(passwordEncoder().encode("admin123"))
-			.roles("ADMIN", "USER");
+			.logout()
+				.invalidateHttpSession(true)
+				.clearAuthentication(true)
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/login?logout").permitAll()
+			.and()
+			.oauth2Login()
+				.loginPage("/login")
+				//.userInfoEndpoint().userService(customOAuth2UserService)
+				.defaultSuccessUrl("/bidList/list",true)
+				;
 	}
-	
 	
 	@Bean
-	public PasswordEncoder passwordEncoder() {
+	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+		auth.setUserDetailsService(userService);
+		auth.setPasswordEncoder(passwordEncoder());
+		return auth;
 	}
 
 }
