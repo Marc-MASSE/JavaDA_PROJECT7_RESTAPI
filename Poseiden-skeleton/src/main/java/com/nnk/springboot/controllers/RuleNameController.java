@@ -1,16 +1,13 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.DTO.RuleNameDTO;
-import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.RuleName;
-import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.service.IRuleNameService;
+import com.nnk.springboot.service.IUserService;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,7 +30,7 @@ public class RuleNameController {
 	private IRuleNameService ruleNameService;
 	
 	@Autowired
-	private UserRepository userRepository;
+	private IUserService userService;
 
 	/*
 	 * Page "RuleName/list"
@@ -44,9 +41,7 @@ public class RuleNameController {
     	List<RuleNameDTO> ruleNameList = ruleNameService.getRuleNames();
     	model.addAttribute("ruleName",ruleNameList);
         log.info("GET request - endpoint /ruleName/list - return RuleName/list page");
-		String connectedUser = SecurityContextHolder.getContext().getAuthentication().getName();
-		User user = userRepository.findUserByUsername(connectedUser);
-		model.addAttribute("user",user);
+        model.addAttribute("user",userService.getConnectedUser());
         return "ruleName/list";
     }
 

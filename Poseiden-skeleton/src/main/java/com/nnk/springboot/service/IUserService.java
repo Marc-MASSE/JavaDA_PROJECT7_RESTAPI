@@ -22,4 +22,6 @@ public interface IUserService extends UserDetailsService {
 
 	UserDTO userToDTOMapper(User user);
 
+	User getConnectedUser();
+
 }

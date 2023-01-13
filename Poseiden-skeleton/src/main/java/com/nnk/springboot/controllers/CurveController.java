@@ -1,14 +1,12 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.DTO.CurvePointDTO;
-import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.service.ICurvePointService;
+import com.nnk.springboot.service.IUserService;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +29,7 @@ public class CurveController {
 	private ICurvePointService curvePointService;
 	
 	@Autowired
-	private UserRepository userRepository;
+	private IUserService userService;
 
 	/*
 	 * Page "CurvePoint/list"
@@ -42,9 +40,7 @@ public class CurveController {
     	List<CurvePointDTO> curvePointList = curvePointService.getCurvePoints();
         model.addAttribute("curvePoint", curvePointList);
         log.info("GET request - endpoint /curvePoint/list - return BidList/list page");
-		String connectedUser = SecurityContextHolder.getContext().getAuthentication().getName();
-		User user = userRepository.findUserByUsername(connectedUser);
-		model.addAttribute("user",user);
+		model.addAttribute("user",userService.getConnectedUser());
         return "curvePoint/list";
     }
 

@@ -2,14 +2,12 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.DTO.RatingDTO;
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.service.IRatingService;
+import com.nnk.springboot.service.IUserService;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,7 +30,7 @@ public class RatingController {
 	private IRatingService ratingService;
 	
 	@Autowired
-	private UserRepository userRepository;
+	private IUserService userService;
 
 	/*
 	 * Page "Rating/list"
@@ -43,9 +41,7 @@ public class RatingController {
     	List<RatingDTO> ratingList = ratingService.getRatings();
     	model.addAttribute("rating",ratingList);
         log.info("GET request - endpoint /rating/list - return Rating/list page");
-		String connectedUser = SecurityContextHolder.getContext().getAuthentication().getName();
-		User user = userRepository.findUserByUsername(connectedUser);
-		model.addAttribute("user",user);
+        model.addAttribute("user",userService.getConnectedUser());
         return "rating/list";
     }
 

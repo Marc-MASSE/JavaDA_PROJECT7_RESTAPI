@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.nnk.springboot.security.CustomOAuth2User;
-import com.nnk.springboot.security.CustomOAuth2UserService;
 import com.nnk.springboot.service.IUserService;
 
 @Configuration
@@ -20,9 +18,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private IUserService userService;
-	
-	//@Autowired
-	//private CustomOAuth2UserService customOAuth2UserService;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -47,8 +42,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.oauth2Login()
 				.loginPage("/login")
-				//.userInfoEndpoint().userService(customOAuth2UserService)
-				.defaultSuccessUrl("/bidList/list",true)
+				.defaultSuccessUrl("/bidList/list",true).permitAll()
 				;
 	}
 	

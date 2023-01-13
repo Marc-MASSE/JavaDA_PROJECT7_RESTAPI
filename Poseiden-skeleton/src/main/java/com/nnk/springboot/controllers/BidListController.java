@@ -1,10 +1,8 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.DTO.BidListDTO;
-import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.service.IBidListService;
+import com.nnk.springboot.service.IUserService;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,7 +31,7 @@ public class BidListController {
 	private IBidListService bidListService;
 	
 	@Autowired
-	private UserRepository userRepository;
+	private IUserService userService;
 
 	/*
 	 * Page "BidList/list"
@@ -44,9 +42,8 @@ public class BidListController {
     	List<BidListDTO> bidList = bidListService.getBidLists();
         model.addAttribute("bidList", bidList);
         log.info("GET request - endpoint /bidList/list - return BidList/list page");
-		String connectedUser = SecurityContextHolder.getContext().getAuthentication().getName();
-		User user = userRepository.findUserByUsername(connectedUser);
-		model.addAttribute("user",user);
+		model.addAttribute("user",userService.getConnectedUser());
+		log.info("SecurityContextHolder = {}",SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "bidList/list";
     }
 

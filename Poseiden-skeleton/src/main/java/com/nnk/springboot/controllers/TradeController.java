@@ -2,14 +2,12 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.DTO.TradeDTO;
 import com.nnk.springboot.domain.Trade;
-import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.service.ITradeService;
+import com.nnk.springboot.service.IUserService;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,16 +30,14 @@ public class TradeController {
 	private ITradeService tradeService;
 	
 	@Autowired
-	private UserRepository userRepository;
+	private IUserService userService;
 
     @RequestMapping("/trade/list")
     public String home(Model model) {
        	List<TradeDTO> tradeList = tradeService.getTrades();
     	model.addAttribute("trade",tradeList);
         log.info("GET request - endpoint /trade/list - return Trade/list page");
-		String connectedUser = SecurityContextHolder.getContext().getAuthentication().getName();
-		User user = userRepository.findUserByUsername(connectedUser);
-		model.addAttribute("user",user);
+        model.addAttribute("user",userService.getConnectedUser());
         return "trade/list";
     }
 
