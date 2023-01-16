@@ -110,11 +110,11 @@ public class UserServiceImpl implements IUserService {
 	
 	@Override
 	public User getConnectedUser() {
-		Authentication connectedUser = SecurityContextHolder.getContext().getAuthentication();
-		User user = userRepository.findUserByUsername(connectedUser.getName());
+		String connectedUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+		User user = userRepository.findUserByUsername(connectedUserName);
 		if (user == null) {
 			user = User.builder()
-					.username(connectedUser.getName())
+					.username(connectedUserName)
 					.role("USER")
 					.build();
 		}

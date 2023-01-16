@@ -42,8 +42,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.oauth2Login()
 				.loginPage("/login")
-				.defaultSuccessUrl("/bidList/list",true).permitAll()
-				;
+				.defaultSuccessUrl("/bidList/list",true).permitAll();
 	}
 	
 	@Bean

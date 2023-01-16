@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 import java.util.Arrays;
 
@@ -14,31 +15,44 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
-import com.nnk.springboot.DTO.BidListDTO;
 import com.nnk.springboot.DTO.UserDTO;
-import com.nnk.springboot.configuration.SpringSecurityConfig;
-import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.service.IUserService;
 
+@SpringBootTest
+@AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 public class UserServiceImplTest {
 	
 	private IUserService userService;
 	
-    //@Autowired
-    //private PasswordEncoder passwordEncoder;
+	@Autowired
+	private WebApplicationContext context;
+	
+	@Autowired
+	private MockMvc mockMvc;
 	
 	@Mock
 	private UserRepository userRepository;
 	@Mock
     private PasswordEncoder passwordEncoder;
+	
+	// To mock the Spring Security context
+	@Mock
+	private SecurityContextHolder securityContextHolder;
 	
 	private User user1;
 	private User user2;
@@ -52,6 +66,12 @@ public class UserServiceImplTest {
 	
 	@BeforeEach
 	public void init() {
+		 this.mockMvc = MockMvcBuilders
+	        		.webAppContextSetup(this.context)
+	        		.apply(springSecurity())
+	        		.build();
+	        // For using @WithMockUser annotation
+	        MockitoAnnotations.openMocks(this);
 		userService = new UserServiceImpl(userRepository,passwordEncoder);
 		user1 = User.builder()
 				.id(1)
@@ -221,5 +241,28 @@ public class UserServiceImplTest {
 		assertThat(userService.userToDTOMapper(user1))
 			.isEqualTo(userDTO1);
 	}
+	
+	// Test getConnectedUser
+	@Nested
+	class GetConnectedUser {
+		@Test
+		@WithMockUser (username = "Usuel1", authorities = "USER")
+		public void by_username() {
+			when(userRepository.findUserByUsername("Usuel1"))
+				.thenReturn(user1);
+			assertThat(userService.getConnectedUser()).isEqualTo(user1);
+			verify(userRepository).findUserByUsername("Usuel1");
+		}
+		@Test
+		@WithMockUser (username = "987654", authorities = "ROLE_USER")
+		public void by_GitHub() {
+			when(userRepository.findUserByUsername("987654"))
+				.thenReturn(null);
+			User gitUser = userService.getConnectedUser();
+			assertThat(gitUser.getRole()).isEqualTo("USER");
+			verify(userRepository).findUserByUsername("987654");
+		}
+	}
+	
 
 }
