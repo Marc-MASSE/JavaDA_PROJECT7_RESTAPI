@@ -72,6 +72,7 @@ public class TradeController {
     public String updateTrade(@PathVariable("id") Integer id, @Valid @ModelAttribute("trade") TradeDTO tradeDTO,BindingResult result, Model model) {
         if (result.hasErrors()) {
             log.info("POST request - endpoint /trade/update - BindingResult = {}",result);
+            tradeDTO.setTradeId(id);
 			return "trade/update";
 		}
     	tradeService.updateTrade(id,tradeDTO);

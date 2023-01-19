@@ -98,6 +98,7 @@ public class RuleNameController {
     public String updateRuleName(@PathVariable("id") Integer id, @Valid @ModelAttribute("ruleName") RuleNameDTO ruleNameDTO, BindingResult result, Model model) {
         if (result.hasErrors()) {
             log.info("POST request - endpoint /ruleName/update - BindingResult = {}",result);
+            ruleNameDTO.setId(id);
 			return "ruleName/update";
 		}
     	ruleNameService.updateRuleName(id,ruleNameDTO);

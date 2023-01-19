@@ -98,6 +98,7 @@ public class RatingController {
     public String updateRating(@PathVariable("id") Integer id, @Valid @ModelAttribute("rating") RatingDTO ratingDTO,BindingResult result, Model model) {
         if (result.hasErrors()) {
             log.info("POST request - endpoint /rating/update - BindingResult = {}",result);
+            ratingDTO.setId(id);
 			return "rating/update";
 		}
     	ratingService.updateRating(id,ratingDTO);

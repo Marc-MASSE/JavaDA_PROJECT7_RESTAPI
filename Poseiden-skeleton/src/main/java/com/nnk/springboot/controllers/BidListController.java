@@ -100,6 +100,7 @@ public class BidListController {
     public String updateBid(@PathVariable("id") Integer id, @Valid @ModelAttribute("bidList") BidListDTO bidListDTO, BindingResult result, Model model) {
         if (result.hasErrors()) {
             log.info("POST request - endpoint /bidList/update - BindingResult = {}",result);
+            bidListDTO.setBidListId(id);
 			return "bidList/update";
 		}
     	bidListService.updateBidList(id,bidListDTO);

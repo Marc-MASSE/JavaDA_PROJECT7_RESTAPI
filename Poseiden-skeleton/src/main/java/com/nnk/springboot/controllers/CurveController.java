@@ -97,6 +97,7 @@ public class CurveController {
     public String updateBid(@PathVariable("id") Integer id, @Valid @ModelAttribute("curvePoint") CurvePointDTO curvePointDTO,BindingResult result, Model model) {
         if (result.hasErrors()) {
             log.info("POST request - endpoint /curvePoint/update - BindingResult = {}",result);
+            curvePointDTO.setCurveId(id);
 			return "curvePoint/update";
 		}
     	curvePointService.updateCurvePoint(id,curvePointDTO);
