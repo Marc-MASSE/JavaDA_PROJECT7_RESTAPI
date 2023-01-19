@@ -3,7 +3,7 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
-<title>Home</title>
+<title>Trade/update</title>
 <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
@@ -13,10 +13,27 @@
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/trade/update/{id}(id=${trade.tradeId})}" th:object="${trade}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to edit the values of Trade, there are 2 buttons: Update data and Cancel to the Trade List
-			 -->
+		<form action="#" th:action="@{/trade/update/{id}(id=${trade.tradeId})}" 
+		th:object="${trade}" method="post" class="form-horizontal" 
+		style="width: 100%">
+			<div class="form-group">
+				<label class="control-label">Account</label>
+				<input type="text" th:field="*{account}" class="form-control" placeholder="Account" />
+				<span class="text-danger" th:errors="*{account}"></span>
+			</div>
+			<div class="form-group">
+				<label class="control-label">Type</label>
+				<input type="text" th:field="*{type}" class="form-control" placeholder="Type" />
+				<span class="text-danger" th:errors="*{type}"></span>
+			</div>
+			<div class="form-group">
+				<label class="control-label">Buy Quantity</label>
+				<input type="number" step="0.01" th:field="*{buyQuantity}" class="form-control" placeholder="Buy Quantity" />
+			</div>
+			<div class="form-group">
+				<a class="btn btn-danger" href="/trade/list" role="button">Cancel</a>
+				<button type="submit" class="btn btn-primary">Update Trade</button>
+			</div>
 		</form>
 	</div>
 

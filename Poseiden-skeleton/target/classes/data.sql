@@ -1,107 +1,28 @@
--- Clear Database
-DROP TABLE IF EXISTS BidList;
-DROP TABLE IF EXISTS Trade;
-DROP TABLE IF EXISTS CurvePoint;
-DROP TABLE IF EXISTS Rating;
-DROP TABLE IF EXISTS RuleName;
-DROP TABLE IF EXISTS Users;
+
+USE demo;
 
 
-CREATE TABLE BidList (
-  BidListId tinyint(4) NOT NULL AUTO_INCREMENT,
-  account VARCHAR(30) NOT NULL,
-  type VARCHAR(30) NOT NULL,
-  bidQuantity DOUBLE,
-  askQuantity DOUBLE,
-  bid DOUBLE ,
-  ask DOUBLE,
-  benchmark VARCHAR(125),
-  bidListDate TIMESTAMP,
-  commentary VARCHAR(125),
-  security VARCHAR(125),
-  status VARCHAR(10),
-  trader VARCHAR(125),
-  book VARCHAR(125),
-  creationName VARCHAR(125),
-  creationDate TIMESTAMP ,
-  revisionName VARCHAR(125),
-  revisionDate TIMESTAMP ,
-  dealName VARCHAR(125),
-  dealType VARCHAR(125),
-  sourceListId VARCHAR(125),
-  side VARCHAR(125),
+INSERT INTO bidlist (account,type,bid_quantity)
+VALUES
+('101','type1','1'),('102','type2','2'),('103','type3','3');
 
-  PRIMARY KEY (BidListId)
-);
+INSERT INTO trade (trade_id,account,type,buy_quantity)
+VALUES
+('1','111','type1','100'),('2','222','type2','200'),('3','333','type3','300');
 
-CREATE TABLE Trade (
-  TradeId tinyint(4) NOT NULL AUTO_INCREMENT,
-  account VARCHAR(30) NOT NULL,
-  type VARCHAR(30) NOT NULL,
-  buyQuantity DOUBLE,
-  sellQuantity DOUBLE,
-  buyPrice DOUBLE ,
-  sellPrice DOUBLE,
-  tradeDate TIMESTAMP,
-  security VARCHAR(125),
-  status VARCHAR(10),
-  trader VARCHAR(125),
-  benchmark VARCHAR(125),
-  book VARCHAR(125),
-  creationName VARCHAR(125),
-  creationDate TIMESTAMP ,
-  revisionName VARCHAR(125),
-  revisionDate TIMESTAMP ,
-  dealName VARCHAR(125),
-  dealType VARCHAR(125),
-  sourceListId VARCHAR(125),
-  side VARCHAR(125),
+INSERT INTO curvepoint (curve_id,term,value)
+VALUES
+('1','10','11'),('2','20','22'),('3','30','33');
 
-  PRIMARY KEY (TradeId)
-);
+INSERT INTO rating (id,moodys_rating,sand_p_rating,fitch_rating,order_number)
+VALUES
+('1','A1','Aa1','Aa1',1),('2','A2','Aa2','Aa2',2),('3','A3','Aa3','Aa3',3);
 
-CREATE TABLE CurvePoint (
-  Id tinyint(4) NOT NULL AUTO_INCREMENT,
-  CurveId tinyint,
-  asOfDate TIMESTAMP,
-  term DOUBLE ,
-  value DOUBLE ,
-  creationDate TIMESTAMP ,
-
-  PRIMARY KEY (Id)
-);
-
-CREATE TABLE Rating (
-  Id tinyint(4) NOT NULL AUTO_INCREMENT,
-  moodysRating VARCHAR(125),
-  sandPRating VARCHAR(125),
-  fitchRating VARCHAR(125),
-  orderNumber tinyint,
-
-  PRIMARY KEY (Id)
-);
-
-CREATE TABLE RuleName (
-  Id tinyint(4) NOT NULL AUTO_INCREMENT,
-  name VARCHAR(125),
-  description VARCHAR(125),
-  json VARCHAR(125),
-  template VARCHAR(512),
-  sqlStr VARCHAR(125),
-  sqlPart VARCHAR(125),
-
-  PRIMARY KEY (Id)
-);
-
-CREATE TABLE Users (
-  Id tinyint(4) NOT NULL AUTO_INCREMENT,
-  username VARCHAR(125),
-  password VARCHAR(125),
-  fullname VARCHAR(125),
-  role VARCHAR(125),
-
-  PRIMARY KEY (Id)
-);
+INSERT INTO rulename (id,name,description,json,template,sql_str,sql_part)
+VALUES
+('1','Nom1','des1','json1','temp1','str1','part1'),
+('2','Nom2','des2','json2','temp2','str2','part2'),
+('3','Nom3','des3','json3','temp3','str3','part3');
 
 INSERT INTO Users (fullname,username,password,role)
 VALUES
