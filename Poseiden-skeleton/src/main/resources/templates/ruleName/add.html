@@ -3,7 +3,7 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
-<title>Home</title>
+<title>RuleName/add</title>
 <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
@@ -14,10 +14,43 @@
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/ruleName/validate}" th:object="${ruleName}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to input the values of RuleName, there are 2 buttons: Save data and Cancel to the list RuleName
-			 -->
+		<form action="#" th:action="@{/ruleName/validate}" 
+			th:object="${ruleName}" method="post" class="form-horizontal" 
+			style="width: 100%">
+			<div class="form-group">
+				<label class="control-label">Name</label>
+				<input type="text" th:field="*{name}" class="form-control" placeholder="Name" />
+				<span class="text-danger" th:errors="*{name}"></span>
+			</div>
+			<div class="form-group">
+				<label class="control-label">Description</label>
+				<input type="text" th:field="*{description}" class="form-control" placeholder="Description" />
+				<span class="text-danger" th:errors="*{description}"></span>
+			</div>
+			<div class="form-group">
+				<label class="control-label">json</label>
+				<input type="text" th:field="*{json}" class="form-control" placeholder="json" />
+				<span class="text-danger" th:errors="*{json}"></span>
+			</div>
+			<div class="form-group">
+				<label class="control-label">template</label>
+				<input type="text" th:field="*{template}" class="form-control" placeholder="template" />
+				<span class="text-danger" th:errors="*{template}"></span>
+			</div>
+			<div class="form-group">
+				<label class="control-label">sql</label>
+				<input type="text" th:field="*{sqlStr}" class="form-control" placeholder="sql" />
+				<span class="text-danger" th:errors="*{sqlStr}"></span>
+			</div>
+			<div class="form-group">
+				<label class="control-label">sqlPart</label>
+				<input type="text" th:field="*{sqlPart}" class="form-control" placeholder="sqlPart" />
+				<span class="text-danger" th:errors="*{sqlPart}"></span>
+			</div>
+			<div class="form-group">
+				<a class="btn btn-danger" href="/ruleName/list" role="button">Cancel</a>
+				<button type="submit" class="btn btn-primary">Add RuleName</button>
+			</div>
 
 		</form>
 	</div>
