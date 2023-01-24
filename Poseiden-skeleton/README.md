@@ -1,10 +1,12 @@
 # spring-boot
 ## Technical:
 
-1. Framework: Spring Boot v2.0.4
-2. Java 8
-3. Thymeleaf
+1. Framework: Spring Boot v2.5.0
+2. Java 17
+3. Thymeleaf v2.5.0
 4. Bootstrap v.4.3.1
+5. Lombok v1.18.20
+6. AssertJ v3.18.9
 
 
 ## Setup with Intellij IDE
